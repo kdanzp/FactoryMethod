@@ -27,9 +27,10 @@ namespace FactoryMethod
         /// <returns>Код выполнения скрипта</returns>		
         public int Execute(Instance instance, IZennoPosterProjectModel project)
         {
-            int executionResult = 0;
+            var logick = new LogickCoub(instance, project);
+            logick.Run();
 
-            return executionResult;
+            return 0;
         }
     }
 }

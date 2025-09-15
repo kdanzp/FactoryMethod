@@ -82,6 +82,7 @@
     <Compile Include="Factories\FactoryOzon.cs" />
     <Compile Include="Factories\FactoryWB.cs" />
     <Compile Include="Factories\MainFactory.cs" />
+    <Compile Include="LogickCoub.cs" />
     <Compile Include="Models\IParser.cs" />
     <Compile Include="Models\ParserOzon.cs" />
     <Compile Include="Models\ParserWB.cs" />
