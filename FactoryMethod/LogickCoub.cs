@@ -40,19 +40,21 @@ namespace FactoryMethod
             Thread.Sleep(500);
             project.SendInfoToLog("Заходим на сайт: " + parser.BaseUrl);
             tab.Navigate(parser.BaseUrl);
+            tab.WaitDownloading();
 
             project.SendInfoToLog("Собираем данные!");
 
             var titels = tab.FindElementsByXPath(parser.TitelXpath).ToArray();
             var prices = tab.FindElementsByXPath(parser.PriceXpath).ToArray();
 
+            project.SendInfoToLog("Собрали данных: " + titels.Length);
             project.SendInfoToLog("Выводим данные:");
 
             for (var i = 0; i < titels.Length; i++)
             {
                 var titel = titels[i].InnerText;
                 var price = prices[i].InnerText;
-                project.SendInfoToLog($"[Название] {titel} | [Цена] {price}");
+                project.SendInfoToLog($"{titel} | Цена: {price}");
             }
 
             project.SendInfoToLog("Закончили парсинг!");
