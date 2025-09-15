@@ -57,6 +57,7 @@ namespace FactoryMethod
                 project.SendInfoToLog($"{i + 1} | {titel}. Цена: {price}");
             }
 
+
             project.SendInfoToLog("Закончили парсинг!");
         }
     }
