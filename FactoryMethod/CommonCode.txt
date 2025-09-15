@@ -1,0 +1,54 @@
+
+namespace ZennoLab.OwnCode
+{
+
+    public class FactoryOzon : MainFactory
+    {
+        public override IParser Create()
+        {
+            return new ParserOzon();
+        }
+    }
+
+    public class FactoryWB : MainFactory
+    {
+        public override IParser Create()
+        {
+            return new ParserWB();
+        }
+    }
+
+    public abstract class MainFactory
+    {
+        /// <summary>
+        /// Создатель фабрики.
+        /// </summary>
+        /// <returns></returns>
+        public abstract IParser Create();
+    }
+
+    public interface IParser
+    {
+        string Name { get; }
+        string BaseUrl { get; }
+        string TitelXpath { get; }
+        string PriceXpath { get; }
+    }
+
+    public class ParserOzon : IParser
+    {
+        public string Name => "Ozon";
+        public string BaseUrl => "https://www.ozon.ru/";
+        public string TitelXpath => "//div[contains(@class, 'root')]//a//span";
+        public string PriceXpath => "//div[contains(@class, 'root')]//span[contains(@class, 'Headline')]";
+    }
+
+    public class ParserWB : IParser
+    {
+        public string Name => "Wildberries";
+        public string BaseUrl => "https://www.wildberries.ru/";
+        public string TitelXpath => "//span[@class='product-card__name']";
+        public string PriceXpath => "//ins[contains(@class, 'price__lower-price')]";
+       
+    }
+}

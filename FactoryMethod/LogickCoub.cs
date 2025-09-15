@@ -54,7 +54,7 @@ namespace FactoryMethod
             {
                 var titel = titels[i].InnerText;
                 var price = prices[i].InnerText;
-                project.SendInfoToLog($"{titel} | Цена: {price}");
+                project.SendInfoToLog($"{i + 1} | {titel}. Цена: {price}");
             }
 
             project.SendInfoToLog("Закончили парсинг!");
