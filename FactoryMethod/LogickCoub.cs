@@ -22,26 +22,31 @@ namespace FactoryMethod
 
         public void Run()
         {
+            // Работа с Фабрикой
             var parserName = project.Variables["parserName"].Value;
 
-            var parserTypes = new Dictionary<string, Func<IParser>>()
+            var factories = new Dictionary<string, Func<IParser>>()
             {
                 { "WB", () => new FactoryWB().Create() },
                 { "Ozon", () => new FactoryOzon().Create() },
             };
 
-            if (!parserTypes.TryGetValue(parserName, out var result))
-                throw new InvalidOperationException("Неизвестный тип парсинга: " + parserName);
+            if (!factories.TryGetValue(parserName, out var factory))
+                throw new ArgumentException("Неизвестный Маркетплейс для парсинга: " + parserName);
 
-            var parser = result();
+            var parser = factory();
+
+            // Логика парсинга
+
+            // Открываем главную сайта Маркетплейса
             var tab = instance.ActiveTab;
-
             project.SendInfoToLog("Начинаем парсить: " + parser.Name);
             Thread.Sleep(500);
             project.SendInfoToLog("Заходим на сайт: " + parser.BaseUrl);
             tab.Navigate(parser.BaseUrl);
             tab.WaitDownloading();
 
+            // Собираем список текстов и цен на странице
             project.SendInfoToLog("Собираем данные!");
 
             var titels = tab.FindElementsByXPath(parser.TitelXpath).ToArray();
@@ -50,13 +55,13 @@ namespace FactoryMethod
             project.SendInfoToLog("Собрали данных: " + titels.Length);
             project.SendInfoToLog("Выводим данные:");
 
+            // Выводим в лог
             for (var i = 0; i < titels.Length; i++)
             {
                 var titel = titels[i].InnerText;
                 var price = prices[i].InnerText;
                 project.SendInfoToLog($"{i + 1} | {titel}. Цена: {price}");
             }
-
 
             project.SendInfoToLog("Закончили парсинг!");
         }
